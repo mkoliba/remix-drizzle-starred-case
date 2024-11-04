@@ -12,18 +12,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     favorite: zx.BoolAsString,
   });
 
-  console.log({ jobId, favorite });
-
   if (favorite === true) {
-    const result = await db
+    await db
       .insert(favoriteJobsTable)
       .values({
         jobId,
         userId: user.id,
       })
       .onConflictDoNothing();
-    console.log(result);
-
     return new Response(null, { status: 200 });
   }
 
