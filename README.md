@@ -1,8 +1,28 @@
-# Welcome to Remix!
+# Remix & Drizzle example
 
 - 📖 [Remix docs](https://remix.run/docs)
 
 ## Set up
+
+Install dependencies:
+
+```shellscript
+npm install
+```
+
+createSQLite database and run migrations:
+
+```shellscript
+npx drizzle-kit push
+```
+
+seed database:
+
+```shellscript
+npm run db:seed
+```
+
+Make sure that variables from `.env` are set - eg using `direnv`.
 
 ## Development
 
@@ -36,7 +56,3 @@ Make sure to deploy the output of `npm run build`
 
 - `build/server`
 - `build/client`
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
