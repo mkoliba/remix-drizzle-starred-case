@@ -8,7 +8,6 @@
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
-    "db:migrate": "drizzle-kit generate:sqlite --out ./db/migrations --schema ./db/schema.server.ts",
     "db:seed": "vite-node db/seed.server.ts"
   },
   "dependencies": {
