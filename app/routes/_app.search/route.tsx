@@ -53,8 +53,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     }
   ).then((res) => res.json())) as JobSearchPayload;
 
-  console.log(titleSearch);
-
   const jobIds = titleSearch.jobIds ?? [];
   const data = (await Promise.all(
     jobIds.map((id) =>
