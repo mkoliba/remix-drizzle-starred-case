@@ -6,19 +6,19 @@
 
 Install dependencies:
 
-```shellscript
+```sh
 npm install
 ```
 
 create SQLite database and run migrations:
 
-```shellscript
+```sh
 npx drizzle-kit push
 ```
 
 seed database:
 
-```shellscript
+```sh
 npm run db:seed
 ```
 
@@ -28,7 +28,7 @@ Make sure that variables from `.env` are set - eg using `direnv`.
 
 Run the dev server:
 
-```shellscript
+```sh
 npm run dev
 ```
 
