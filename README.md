@@ -56,3 +56,9 @@ Make sure to deploy the output of `npm run build`
 
 - `build/server`
 - `build/client`
+
+## Architecture diagram
+
+The Diagram was created using [PlantUML](https://plantuml.com/) in file `architecture.pulm`.
+
+![Architecture diagram](./out/architecture/Architecture.svg)

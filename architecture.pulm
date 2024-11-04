@@ -1,0 +1,42 @@
+@startuml Architecture
+
+skinparam componentStyle rectangle
+
+actor User
+component "Frontend (React)" {
+    component "Search Form" as SF
+    component "Job Card List" as JCL
+    component "Pagination" as PAG
+    component "Favorite Button" as FB
+}
+
+component "Remix Server" {
+    component "/search loader" as RL
+    component "/favorite actions" as FA
+}
+
+database "Database" {
+    component "Favorite Jobs Table" as FJT
+}
+
+cloud "External Job API" {
+    component "Paginated Jobs Endpoint" as JE
+    component "Job Recommendations" as JR
+    component "Single Job Details" as SJ
+}
+
+User --> SF : Enters search
+User --> PAG : Clicks next page
+User --> FB : Marks job as favorite
+SF --> RL : Submits query (GET)
+RL --> FJT : Fetches favorite jobs
+FA --> FJT : Creates/deletes favorite job
+RL --> JE : Fetches job listings
+RL --> JR : Searches by title
+RL --> SJ : Fetches job details
+RL --> JCL : Paginated all data
+RL --> JCL : Seach results
+JCL --> User : Displays jobs
+PAG --> RL : GET request
+FB --> FA : POST request
+@enduml
