@@ -30,7 +30,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       .where(eq(favoriteJobsTable.userId, user.id))
   ).map(({ id }) => id);
 
-  if (!search) {
+  if (search == null || search === '') {
     const url = new URL(
       'https://yon9jygrt9.execute-api.eu-west-1.amazonaws.com/prod/jobs'
     );
@@ -53,7 +53,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     }
   ).then((res) => res.json())) as JobSearchPayload;
 
-  const jobIds = titleSearch.jobIds;
+  console.log(titleSearch);
+
+  const jobIds = titleSearch.jobIds ?? [];
   const data = (await Promise.all(
     jobIds.map((id) =>
       fetch(
@@ -79,6 +81,7 @@ export default function Route() {
           <Form className="flex items-center gap-2">
             <Input
               type="search"
+              minLength={2}
               name="search"
               placeholder="Search..."
               defaultValue={search ?? ''}
@@ -100,6 +103,7 @@ export default function Route() {
               favorite={favoriteJobsIds.includes(result.id)}
             />
           ))}
+          {searchResult.data.length === 0 ? <p>No results found</p> : null}
         </div>
 
         {/* Replace pagination section with new component */}
