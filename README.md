@@ -10,7 +10,7 @@ Install dependencies:
 npm install
 ```
 
-createSQLite database and run migrations:
+create SQLite database and run migrations:
 
 ```shellscript
 npx drizzle-kit push
@@ -31,6 +31,8 @@ Run the dev server:
 ```shellscript
 npm run dev
 ```
+
+Seed file creates a single testing user. Login form is prefilled with the credentials.
 
 ## Deployment
 
