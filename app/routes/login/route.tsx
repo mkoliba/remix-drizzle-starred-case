@@ -1,16 +1,38 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 import { Form, json, useActionData, useNavigation } from '@remix-run/react';
-import { sessionStorage } from '~/lib/session.server';
+import {
+  commitSession,
+  getSession,
+  sessionStorage,
+} from '~/lib/session.server';
 import { authenticator } from '~/lib/auth.server';
+import { redirect } from '@remix-run/node';
+import { AuthorizationError } from 'remix-auth';
 
 export async function action({ request }: ActionFunctionArgs) {
-  const { user } = await authenticator.authenticate('user-pass', request, {
-    successRedirect: '/search',
-  });
-  if (!user) {
-    return json({ error: 'Invalid email or password' }, { status: 400 });
+  try {
+    const user = await authenticator.authenticate('user-pass', request, {
+      throwOnError: true,
+    });
+
+    // manually get the session
+    const session = await getSession(request.headers.get('cookie'));
+    // and store the user data
+    session.set(authenticator.sessionKey, user);
+    // commit the session
+    const headers = new Headers({ 'Set-Cookie': await commitSession(session) });
+
+    return redirect('/search', { headers });
+  } catch (error) {
+    if (
+      error instanceof AuthorizationError &&
+      error.message === 'Invalid email or password'
+    ) {
+      return json({ error: 'Invalid email or password' }, { status: 400 });
+    }
+    console.error(error);
+    return json({ error: 'Something went wrong' }, { status: 500 });
   }
-  return json({ error: null });
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
